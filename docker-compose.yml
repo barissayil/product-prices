@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./back
+    command: uvicorn main:app --host 0.0.0.0 --reload
+    volumes:
+      - ./back:/app
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+
+  test:
+    build: ./back
+    command: pytest
+    volumes:
+      - ./back:/app
+      - ./data:/app/data
+    depends_on:
+      - backend
